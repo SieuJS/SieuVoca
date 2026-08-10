@@ -1,0 +1,12 @@
+# Local source material and internal planning notes
+internal/
+crawl/
+
+# Tooling state
+.mcp.json
+.code-review-graph/
+docs/
+
+# OS metadata
+.DS_Store
+**/.DS_Store
