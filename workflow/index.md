@@ -1,3 +1,9 @@
+---
+title: "Workflow"
+sidebarTitle: "Workflow"
+description: "How repo docs, Mintlify, Penpot, Linear, and pull requests stay aligned."
+---
+
 # Workflow
 
 ## Purpose
