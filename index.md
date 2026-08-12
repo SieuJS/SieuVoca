@@ -9,9 +9,9 @@ This repository is the documentation source of truth for the SieuVoca IELTS stud
 
 ## Start Here
 
-- [IELTS Extension Documentation](./product/ielts-extension/index.md) - product scope, architecture, data model, extension behavior, website experience, risks, and backlog.
-- [Workflow](./workflow/index.md) - how repo docs, Mintlify, Penpot, Linear, and pull requests stay aligned.
-- [Clean Architecture Notes](./architecture/clean-architecture/index.md) - architecture principles and source notes that guide backend design.
+- [IELTS Extension Documentation](/product/ielts-extension) - product scope, architecture, data model, extension behavior, website experience, risks, and backlog.
+- [Workflow](/workflow) - how repo docs, Mintlify, Penpot, Linear, and pull requests stay aligned.
+- [Clean Architecture Notes](/architecture/clean-architecture) - architecture principles and source notes that guide backend design.
 
 ## Current Focus
 
