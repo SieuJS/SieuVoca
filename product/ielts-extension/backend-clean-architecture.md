@@ -16,6 +16,88 @@ Each service should keep Clean Architecture internally:
 
 The hard path is accepted intentionally: service contracts, observability, local orchestration, data ownership, and failure handling are MVP architecture concerns, not future cleanup.
 
+## Backend Architecture Diagram
+
+```mermaid
+flowchart TB
+    subgraph Clients
+        EXT[Chrome Extension]
+        WEB[Website]
+    end
+
+    EXT --> GW[API Gateway]
+    WEB --> GW
+    GW --> ESA[Extension Sync API]
+    GW --> WA[Website API]
+
+    subgraph Services[Independently deployable services]
+        ID[Identity Profile Service]
+        PC[Practice Capture Service]
+        VOC[Vocabulary Service]
+        DICT[Dictionary Service]
+        REV[Review Service]
+        DASH[Dashboard Analytics Service]
+        PARSER[Parser Health Service]
+        AI[AI Speech Service]
+    end
+
+    ESA --> ID
+    ESA --> PC
+    ESA --> VOC
+    ESA --> DICT
+    ESA --> PARSER
+    WA --> ID
+    WA --> DICT
+    WA --> REV
+    WA --> DASH
+
+    VOC -->|Immediate dictionary card| DICT
+    DICT -->|AI enrichment| AI
+    REV -->|Pronunciation assessment| AI
+
+    ID --> BUS[(Versioned event contracts)]
+    PC --> BUS
+    VOC --> BUS
+    DICT --> BUS
+    REV --> BUS
+    PARSER --> BUS
+    BUS --> REV
+    BUS --> DASH
+
+    ID --> IDDB[(Identity data)]
+    PC --> PCDB[(Practice data)]
+    VOC --> VOCDB[(Vocabulary data)]
+    DICT --> DICTDB[(Dictionary cache)]
+    REV --> REVDB[(Review data)]
+    DASH --> DASHDB[(Analytics read models)]
+    PARSER --> PHDB[(Parser health data)]
+
+    DICT --> FDP[FreeDictionaryAPI]
+    AI --> AIP[AI, translation, and speech providers]
+
+    OBS[Logs, metrics, traces, health checks] -. observes .-> GW
+    OBS -. observes .-> Services
+```
+
+Synchronous calls serve user-facing reads and commands that need an immediate response. Versioned events propagate state between services, and every service owns its writable data.
+
+## Clean Architecture Inside Each Service
+
+```mermaid
+flowchart LR
+    EP[HTTP endpoint or event consumer] --> PRES[Presentation adapter]
+    PRES --> APP[Application use case]
+    APP --> DOMAIN[Domain model]
+    APP --> PORTS[Repository and provider ports]
+    INFRA[Infrastructure adapters] -->|implement| PORTS
+    INFRA --> DB[(Service-owned database)]
+    INFRA --> PROVIDER[External provider or event broker]
+
+    RULE[Domain has no outward dependencies] -.-> DOMAIN
+```
+
+Dependencies point inward: presentation invokes application use cases, application depends on domain models and ports, and infrastructure implements those ports. Domain code does not depend on transport, persistence, messaging, or third-party SDKs.
+
 ## Layers
 
 Domain layer:

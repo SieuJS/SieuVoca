@@ -12,6 +12,40 @@ Define how planning, documentation, design, tracking, and code changes stay alig
 
 This workflow applies to both agent-driven and human-driven changes. Agents and developers should use it to decide when to update docs, create or update Linear work, refresh Penpot visuals, publish Mintlify docs, and link pull requests.
 
+## Workflow Diagram
+
+```mermaid
+flowchart TD
+    A[Proposed change] --> B{Meaningful change?}
+    B -->|No| C[Apply the small-change exception]
+    C --> PR[Open or update the pull request]
+
+    B -->|Yes| D[Create or update the canonical repo doc]
+    D --> E[Review and accept the repo doc]
+    E --> F{Published documentation affected?}
+    F -->|Yes| G[Update Mintlify]
+    F -->|No| H{UI, flow, or system visual affected?}
+    G --> H
+
+    H -->|Yes| I[Update Penpot]
+    H -->|No| J{Tracking or follow-up needed?}
+    I --> J
+
+    J -->|Yes| K[Create or update Linear work]
+    J -->|No| L[Prepare implementation or documentation change]
+    K --> L
+    L --> PR
+
+    PR --> M[Link the repo doc and applicable artifacts]
+    M --> N[Review, merge, and publish]
+    N --> O[Change complete]
+
+    PR -. delivery pressure .-> P[Add the missing doc update in the same PR or a follow-up issue]
+    P --> O
+```
+
+The repo doc remains the canonical anchor throughout the flow. Mintlify, Penpot, Linear, and the pull request are updated only when they apply, and each applicable artifact links back to the repo doc.
+
 ## Source Of Truth
 
 Repo docs are the source of truth.

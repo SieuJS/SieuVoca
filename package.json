@@ -1,0 +1,11 @@
+{
+  "name": "sieuvoca-docs",
+  "private": true,
+  "packageManager": "pnpm@10.4.1",
+  "scripts": {
+    "penpot:mcp": "penpot-mcp"
+  },
+  "devDependencies": {
+    "@penpot/mcp": "^2.15.4"
+  }
+}

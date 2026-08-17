@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "Mintlify": {
+      "type": "http",
+      "url": "https://mcp.mintlify.com"
+    },
+    "penpot": {
+      "type": "http",
+      "url": "http://localhost:4401/mcp"
+    }
+  }
+}

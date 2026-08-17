@@ -1,0 +1,23 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@penpot/mcp':
+        specifier: ^2.15.4
+        version: 2.15.4
+
+packages:
+
+  '@penpot/mcp@2.15.4':
+    resolution: {integrity: sha512-BjqqLNGd4diFgBNOkEofDlDavCHptsNthH88ANy/69LrSAuoeg08DJgfqZMrjnyIsrbI7Sc2MDJPVLzCQbpdoQ==}
+    hasBin: true
+
+snapshots:
+
+  '@penpot/mcp@2.15.4': {}
