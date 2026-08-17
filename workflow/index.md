@@ -46,6 +46,58 @@ flowchart TD
 
 The repo doc remains the canonical anchor throughout the flow. Mintlify, Penpot, Linear, and the pull request are updated only when they apply, and each applicable artifact links back to the repo doc.
 
+## Code Review And Delivery Flow
+
+Use this flow for one human reviewing code written with agent assistance:
+
+```mermaid
+flowchart TD
+    A[Linear: Todo] --> B[Define acceptance criteria]
+    B --> C[Create branch with issue ID]
+    C --> D[Linear: In Progress]
+    D --> E[Implement change]
+    E --> F[Run local tests]
+    F --> G[Open draft PR]
+    G --> H[Run CI checks]
+    H --> I{CI passes?}
+    I -->|No| E
+    I -->|Yes| J[Linear: In Review]
+    J --> K[Human review and smoke test]
+    K --> L{Approved?}
+    L -->|Changes requested| E
+    L -->|Yes| M[Merge]
+    M --> N[Post-merge smoke check]
+    N --> O[Linear: Done]
+```
+
+Recommended Linear states:
+
+`Backlog -> Todo -> In Progress -> In Review -> Done`
+
+Automation rules:
+
+- Include the Linear issue ID in the branch name and pull request title.
+- Move the issue to `In Progress` when its branch is created.
+- Move the issue to `In Review` when the pull request is ready for review.
+- Move the issue to `Done` only after merge and the applicable delivery check. If deployment is separate, use a merged state and reserve `Done` for deployment.
+
+Merge gates:
+
+- Protect the main branch and disallow direct pushes.
+- Require lint, type checks, automated tests, and build checks that apply to the change.
+- Require all review conversations to be resolved.
+- Re-run CI after every review change.
+- Record the human smoke-test result in the pull request.
+- Prefer squash merge and delete the merged branch.
+
+With one human, require one human approval when an agent or bot identity opens the pull request. If the human's own account is the pull request author, use a required review checklist plus green CI and recorded smoke-test evidence; self-approval is not an independent review.
+
+References:
+
+- [Linear GitHub integration](https://linear.app/docs/github-integration)
+- [GitHub protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
+- [GitHub pull request standards](https://docs.github.com/en/pull-requests/reference/managing-and-standardizing-pull-requests)
+
 ## Source Of Truth
 
 Repo docs are the source of truth.

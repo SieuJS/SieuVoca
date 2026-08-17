@@ -64,16 +64,16 @@ flowchart LR
 ## Code And Task Workflow
 
 ```mermaid
-flowchart LR
-    A[Scope change] --> B[Update repo doc]
-    B --> C[Linear task if needed]
-    C --> D[Implement change]
-    D --> E[Run tests]
-    E --> F[Open pull request]
-    F --> G{Approved?}
-    G -->|No| D
-    G -->|Yes| H[Merge and publish]
-    B -->|If affected| I[Update Mintlify and/or Penpot]
-    I --> F
-    A -. small-change exception .-> D
+flowchart TD
+    A[Repo doc] --> B[Linear task and acceptance criteria]
+    B --> C[Branch with issue ID]
+    C --> D[Code and local tests]
+    D --> E[Draft PR and CI]
+    E --> F{CI passes?}
+    F -->|No| D
+    F -->|Yes| G[Human review and smoke test]
+    G -->|Changes| D
+    G -->|Approve| H[Merge]
+    H --> I[Post-merge check]
+    I --> J[Linear: Done]
 ```
