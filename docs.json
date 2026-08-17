@@ -23,6 +23,7 @@
         "pages": [
           "product/ielts-extension/product-scope",
           "product/ielts-extension/validation-gates",
+          "product/ielts-extension/architecture-summary",
           "product/ielts-extension/system-architecture",
           "product/ielts-extension/backend-clean-architecture",
           "product/ielts-extension/microservices-architecture",
